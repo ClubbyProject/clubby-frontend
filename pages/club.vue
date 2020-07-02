@@ -6,17 +6,11 @@
         <v-col v-for="club in clubs" :key="club.id" :cols="6">
           <v-card raised>
             <v-card-text>
-              <p class="display-1 text--primary">{{club.name}}</p>
-              <div class="text--primary" style="white-space: pre-line">{{club.description}}</div>
-              <br />
-              <p class="text--secondary">值班時間：{{club.dutyTime}}</p>
-              <p class="text--secondary">值班地點：{{club.clubLocation}}</p>
-              <p class="text--secondary">社課時間：{{club.meetTime}}</p>
-              <p class="text--secondary">社課地點：{{club.meetLocation}}</p>
+                <p>ouo</p>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="primary" :to="{name: 'club', query: {id: club.id}}">前往社團看版</v-btn>
+              <v-btn color="primary" >前往社團看版</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
