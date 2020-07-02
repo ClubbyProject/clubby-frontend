@@ -24,7 +24,7 @@
           <v-list-item
             v-for="(club, i) in userClubs"
             :key="i"
-            :to="{name: 'club', query: {id: club.id}}"
+            :to="{name: 'club-id', params: {id: club.id}}"
             router exact
           >
             <v-list-item-title v-text="club.name"></v-list-item-title>
@@ -43,7 +43,7 @@
           <v-list-item
             v-for="(club, i) in clubs"
             :key="i"
-            :to="{name: 'club', query: {id: club.id}}"
+            :to="{name: 'club-id', params: {id: club.id}}"
             router exact
           >
             <v-list-item-title v-text="club.name"></v-list-item-title>

@@ -58,7 +58,7 @@ export default {
   },
   async mounted() {
     const params = new URLSearchParams(window.location.search);
-    var id = params.get("id");
+    var id = this.$route.params.id;
     let resp = await this.$nuxt.$axios.get("/club/" + id + "/post");
     console.log(resp.data);
     this.clubName = resp.data[0].name;
@@ -80,7 +80,7 @@ export default {
   methods: {
     sendPost() {
       const params = new URLSearchParams(window.location.search);
-      var id = params.get("id");
+      var id = this.$route.params.id;
       console.log(this.title);
     }
   }
