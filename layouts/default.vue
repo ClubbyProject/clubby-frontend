@@ -63,10 +63,13 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   data () {
+    console.log(this.$nuxt.$store.state.token.value);
     return {
-      authorized: this.$nuxt.$gAuth.isAuthorized,
+      authorized: false,
       clipped: false,
       drawer: true,
       fixed: false,
@@ -88,19 +91,20 @@ export default {
       title: 'Clubby'
     };
   },
-  asyncData(){
-    console.log("gAuth.isAuthorized=" + this.$nuxt.$gAuth.isAuthorized);
-    return {authorized: this.$nuxt.$gAuth.isAuthorized };
+  asyncData({ store }){
+    console.log(store);
+    return {authorized: store.state.token.value != null };
   },
   methods: {
     async login(){
       const user = await this.$nuxt.$gAuth.signIn();
       const response = await this.$nuxt.$axios.post("/login", {"code": user.getAuthResponse().id_token });
-      console.log(response);
+      this.$store.commit("token/set", response.data);
       alert("Logged in");
     },
     async logout(){
       const response = await this.$nuxt.$gAuth.signOut();
+      this.$store.commit("token/remove");
       alert("Logged out");
     }
   }
