@@ -3,6 +3,18 @@
     <h1>{{clubName}}</h1>
     <v-container fluid>
       <v-row align="center" justify="center">
+        <v-col :cols="8">
+          <v-card raised>
+              
+            <v-form ref="form">
+              <v-text-field v-model="title" label="標題" required></v-text-field>
+              <v-btn color="primary" @click="sendPost">送出</v-btn>
+            </v-form>
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <v-row align="center" justify="center">
         <v-col v-for="post in posts" :key="post.title" :cols="8">
           <v-card raised>
             <v-card-title>
@@ -35,8 +47,12 @@ import VuetifyLogo from "~/components/VuetifyLogo.vue";
 export default {
   data() {
     return {
+      title: null,
+      context: null,
+      //
       clubName: null,
-      posts: []
+      posts: [],
+      files: []
     };
   },
   async mounted() {
@@ -59,6 +75,13 @@ export default {
         createAt: e.createAt
       });
     });
+  },
+  methods: {
+    sendPost() {
+      const params = new URLSearchParams(window.location.search);
+      var id = params.get("id");
+      console.log(this.title);
+    }
   }
 };
 </script>
