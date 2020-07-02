@@ -33,6 +33,7 @@ export default {
   */
   plugins: [
     '~/plugins/vue-google-oauth2',
+    '~/plugins/axios',
     { src: '~/plugins/localStorage.js', ssr: false }
   ],
   /*
