@@ -10,6 +10,45 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
+        <v-list-group
+        prepend-icon="mdi-account-group"
+        v-if="userClubs.length > 0"
+        value="true"
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>你的社團</v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <v-list-item
+            v-for="(club, i) in userClubs"
+            :key="i"
+            :to="{name: 'club', query: {id: club.id}}"
+            router exact
+          >
+            <v-list-item-title v-text="club.name"></v-list-item-title>
+          </v-list-item>
+        </v-list-group>
+        <v-list-group
+        prepend-icon="mdi-account-group"
+        v-if="clubs"
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>更多社團</v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <v-list-item
+            v-for="(club, i) in clubs"
+            :key="i"
+            :to="{name: 'club', query: {id: club.id}}"
+            router exact
+          >
+            <v-list-item-title v-text="club.name"></v-list-item-title>
+          </v-list-item>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app color="primary" dark hide-on-scroll>
@@ -35,7 +74,7 @@
       </v-container>
     </v-content>
     <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span>&copy; {{ new Date().getFullYear() }} Clubby</span>
     </v-footer>
   </v-app>
 </template>
@@ -44,9 +83,11 @@
 import { mapMutations } from "vuex";
 
 export default {
-  data() {
+  data({ app, params, store }) {
     return {
       clipped: false,
+      userClubs: [],
+      clubs: [],
       drawer: true,
       fixed: false,
       items: [
@@ -67,6 +108,15 @@ export default {
       title: "Clubby"
     };
   },
+  async mounted(){
+    let resp = await this.$nuxt.$axios.get("/club");
+    this.clubs = resp.data;
+    if(this.$nuxt.$store.state.token.value==null) return;
+    try{
+      let resp2 = await this.$nuxt.$axios.get("/user/0/club");
+      this.userClubs = resp2.data;
+    }catch{}
+  },
   methods: {
     async login() {
       const user = await this.$nuxt.$gAuth.signIn();
@@ -84,17 +134,6 @@ export default {
     token() {
       return this.$nuxt.$store.state.token.value;
     }
-  },
-  async mounted() {
-    var resp = await this.$nuxt.$axios.get("/club");
-    var clubs = resp.data;
-    // load user's club
-    try {
-      var userclub = await this.$nuxt.$axios.get("/user/666/club");
-      userclub = userclub.map(x=>x.clubId);
-      var newlist = clubs.filter(({ id }) => userclub.includes(id));
-      console.log(newlist)
-    } catch (error) {}
   }
 };
 </script>

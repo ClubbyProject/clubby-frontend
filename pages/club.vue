@@ -5,11 +5,12 @@
       <v-row align="center" justify="center">
         <v-col :cols="8">
           <v-card raised>
-              
-            <v-form ref="form">
-              <v-text-field v-model="title" label="標題" required></v-text-field>
-              <v-btn color="primary" @click="sendPost">送出</v-btn>
-            </v-form>
+              <v-col>
+                <v-form ref="form">
+                  <v-text-field v-model="title" label="標題" required></v-text-field>
+                  <v-btn color="primary" @click="sendPost">送出</v-btn>
+                </v-form>
+              </v-col>
           </v-card>
         </v-col>
       </v-row>
