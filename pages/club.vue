@@ -29,8 +29,9 @@ export default {
       clubs: null
     };
   },
-  mounted() {
-    this.$nuxt.$axios.get("/club").then(resp => (this.clubs = resp.data));
+  async mounted() {
+    let resp = await this.$nuxt.$axios.get("/club")
+    this.club = resp.data;
   }
 };
 </script>
