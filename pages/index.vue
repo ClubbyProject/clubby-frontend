@@ -51,8 +51,10 @@ export default {
       let body = {
         club: events[i].createByClubNavigation,
         desc: events[i].createByClubNavigation.description,
-        img: "https://i.imgur.com/" + events[i].createByClubNavigation.post[0].imageList
-      }
+        img: "data:text/plain;base64,"
+      };
+      if(events[i].createByClubNavigation.post[0].imageList!="")
+        body.img = "https://i.imgur.com/" + events[i].createByClubNavigation.post[0].imageList;
       if(body.desc){
         if(body.desc.length>50)
           body.desc = body.desc.substring(0, 50) + "...";

@@ -1,4 +1,5 @@
-# clubby-frontend
+# Clubby
+Event system for clubs in college
 
 ## Build Setup
 
