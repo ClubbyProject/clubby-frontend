@@ -9,9 +9,10 @@
         <v-col
           v-for="(card, i) in cards"
           :key="i"
-          :cols="2"
+          sm="4" cols="6"
         >
           <v-card 
+          style="width: 300px;"
           :to="{name: 'club-id' , params: { id: card.club.id }}"
           >
             <v-img
@@ -22,13 +23,7 @@
             >
               <v-card-title v-text="card.club.name"></v-card-title>
             </v-img>
-            <v-card-subtitle class="pb-0" v-text="card.desc"></v-card-subtitle>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-            </v-card-actions>
+            <v-card-subtitle class="pb-0" v-text="card.desc" v-if="card.desc"></v-card-subtitle>
           </v-card>
         </v-col>
       </v-row>
@@ -59,14 +54,11 @@ export default {
         img: "https://i.imgur.com/" + events[i].createByClubNavigation.post[0].imageList
       }
       if(body.desc){
-        if(body.desc.length>30)
-          body.desc = body.desc.substring(0, 30) + "...";
+        if(body.desc.length>50)
+          body.desc = body.desc.substring(0, 50) + "...";
       }
       this.cards = this.cards.concat(body);
     }
-    console.log(this.cards)
-      
-
   }
 }
 </script>

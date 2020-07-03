@@ -58,9 +58,6 @@
       <v-btn icon>
         <v-icon>mdi-account</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-bell</v-icon>
-      </v-btn>
       <v-btn icon v-if="token!==null" @click="logout">
         <v-icon>mdi-exit-run</v-icon>
       </v-btn>
@@ -124,10 +121,17 @@ export default {
         code: user.getAuthResponse().id_token
       });
       this.$store.commit("token/set", response.data);
+      let name = user.getBasicProfile().getName();
+      let img = user.getBasicProfile().getImageUrl();
+      this.$store.commit("profile/setName", name);
+      this.$store.commit("profile/setImage", img);
+      this.$router.go(0);
     },
     async logout() {
       const response = await this.$nuxt.$gAuth.signOut();
       this.$store.commit("token/remove");
+      this.$store.commit("profile/remove");
+      this.$router.go(0);
     }
   },
   computed: {

@@ -3,7 +3,7 @@ import createPersistedState from 'vuex-persistedstate'
 export default ({store}) => {
   window.onNuxtReady(() => {
     createPersistedState({
-        paths: ["token.value"]
+        paths: ["token.value", "profile"]
     })(store)
   })
 }

@@ -16,7 +16,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="primary" :to="{name: 'club', query: {id: club.id}}">前往社團看版</v-btn>
+              <v-btn color="primary" :to="{name: 'club-id', params: {id: club.id}}">前往社團看版</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
