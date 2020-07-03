@@ -55,9 +55,13 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn icon>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
+      <v-avatar v-if="avatar">
+        <img
+          :src="avatar"
+          :alt="name"
+        >
+      </v-avatar>
+      <span>&nbsp;{{ name }}</span>
       <v-btn icon v-if="token!==null" @click="logout">
         <v-icon>mdi-exit-run</v-icon>
       </v-btn>
@@ -82,6 +86,8 @@ import { mapMutations } from "vuex";
 export default {
   data({ app, params, store }) {
     return {
+      avatar: null,
+      name: "",
       clipped: false,
       userClubs: [],
       clubs: [],
@@ -112,6 +118,8 @@ export default {
     try{
       let resp2 = await this.$nuxt.$axios.get("/user/0/club");
       this.userClubs = resp2.data;
+      this.avatar = this.$store.state.profile.img;
+      this.name = this.$store.state.profile.name;
     }catch{}
   },
   methods: {
