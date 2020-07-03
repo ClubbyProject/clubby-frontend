@@ -5,20 +5,14 @@
       <v-row align="center" justify="center">
         <v-col :cols="8">
           <v-card raised>
-<<<<<<< HEAD
-              <v-col>
-                <v-form ref="form">
-                  <v-text-field v-model="title" label="標題" required></v-text-field>
-                  <v-btn color="primary" @click="sendPost">送出</v-btn>
-                </v-form>
-              </v-col>
-=======
-            <v-form ref="form">
-              <v-text-field v-model="title" label="標題" required></v-text-field>
-              <v-textarea v-model="context" filled name="incontext" label="內容" value></v-textarea>
-              <v-btn color="primary" @click="sendPost">送出</v-btn>
-            </v-form>
->>>>>>> add content textbox
+            <v-col>
+              <p class="display-1 text--primary">發布貼文</p>
+              <v-form ref="form">
+                <v-text-field v-model="title" label="標題" required></v-text-field>
+                <v-textarea v-model="content" filled name="input74" label="內容" value></v-textarea>
+                <v-btn color="primary" @click="sendPost">送出</v-btn>
+              </v-form>
+            </v-col>
           </v-card>
         </v-col>
       </v-row>
@@ -57,7 +51,7 @@ export default {
   data() {
     return {
       title: null,
-      context: null,
+      content: null,
       //
       clubName: null,
       posts: [],
@@ -86,11 +80,14 @@ export default {
     });
   },
   methods: {
-    sendPost() {
+    async sendPost() {
       const params = new URLSearchParams(window.location.search);
       var id = this.$route.params.id;
-      console.log(this.title);
-      console.log(this.context);
+      var resp = await this.$nuxt.$axios.post("/club/" + id + "/post", {
+        title: this.title,
+        content: this.content,
+        imageList: ""
+      });
     }
   }
 };
